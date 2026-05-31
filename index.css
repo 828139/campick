@@ -1,0 +1,918 @@
+/*
+  CamPick Design System
+  Concept: Anti-Gravity Editorial
+  Fonts: Pretendard (KR) + Inter (EN)
+  Color: #3B82F6 Blue / #8B5CF6 Purple / #0F172A Dark
+*/
+
+/* =============================================
+   0. ROOT VARIABLES
+============================================= */
+:root {
+  --accent-blue:   #3B82F6;
+  --accent-purple: #8B5CF6;
+  --accent-pink:   #EC4899;
+  --accent-green:  #10B981;
+  --dark:          #0F172A;
+  --dark-2:        #1E293B;
+  --muted:         #64748B;
+  --light:         #F8FAFC;
+  --white:         #FFFFFF;
+  --grad-primary:  linear-gradient(135deg, #3B82F6, #8B5CF6);
+  --grad-warm:     linear-gradient(135deg, #EC4899, #8B5CF6);
+  --font-kr: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  --font-en: 'Inter', sans-serif;
+  --nav-h: 78px;
+  --radius-phone: 38px;
+}
+
+/* =============================================
+   1. RESET & BASE
+============================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-kr);
+  background-color: var(--white);
+  color: var(--dark-2);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.7;
+}
+
+img { display: block; max-width: 100%; }
+
+a { text-decoration: none; color: inherit; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-kr);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+/* =============================================
+   2. UTILITIES
+============================================= */
+.grad-text {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* =============================================
+   3. NAV
+============================================= */
+#gnb {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#gnb.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  font-family: var(--font-en);
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.04em;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--dark-2); }
+
+.nav-cta {
+  background: var(--grad-primary);
+  color: #fff;
+  padding: 11px 26px;
+  border-radius: 99px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.3s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.45);
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--dark-2);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* =============================================
+   4. HERO SECTION
+============================================= */
+.hero {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #f0f4ff 0%, #faf5ff 50%, #eff6ff 100%);
+}
+
+/* Background blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob-1 {
+  width: 600px; height: 600px;
+  background: rgba(59, 130, 246, 0.12);
+  top: -100px; left: -200px;
+  animation: blobFloat1 12s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 500px; height: 500px;
+  background: rgba(139, 92, 246, 0.1);
+  bottom: 0; right: -150px;
+  animation: blobFloat2 15s ease-in-out infinite;
+}
+
+.blob-3 {
+  width: 300px; height: 300px;
+  background: rgba(236, 72, 153, 0.07);
+  top: 40%; left: 50%;
+  animation: blobFloat3 10s ease-in-out infinite;
+}
+
+@keyframes blobFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(30px, 40px) scale(1.1); }
+}
+@keyframes blobFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-20px, -30px) scale(1.05); }
+}
+@keyframes blobFloat3 {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%  { transform: translate(-50%, -20px) scale(1.08); }
+}
+
+/* Deco tags */
+.deco-tag {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark-2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tag-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  display: inline-block;
+}
+.tag-dot-green { background: var(--accent-green); }
+.tag-dot-orange { background: #F97316; }
+
+.deco-tag-1 { top: 22%; left: 5%; }
+.deco-tag-2 { top: 55%; left: 3%; }
+.deco-tag-3 { top: 30%; right: 4%; }
+
+/* Stars */
+.star {
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--accent-purple);
+  opacity: 0.4;
+  z-index: 10;
+  pointer-events: none;
+}
+.star-1 { top: 18%; right: 18%; font-size: 2rem; }
+.star-2 { bottom: 30%; left: 8%; font-size: 1rem; opacity: 0.25; }
+.star-3 { top: 60%; right: 10%; font-size: 0.8rem; opacity: 0.3; }
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 60px 48px 80px;
+  z-index: 2;
+}
+
+.hero-text { flex: 1; max-width: 560px; }
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+
+.hero-text h1 {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.btn-primary {
+  background: var(--grad-primary);
+  color: white;
+  padding: 16px 36px;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(59, 130, 246, 0.5);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--dark-2);
+  padding: 16px 36px;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.stat { text-align: center; }
+
+.stat-num {
+  display: block;
+  font-family: var(--font-en);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--dark);
+  letter-spacing: -0.04em;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Hero phone */
+.hero-phone-wrap {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.phone-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%  { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* =============================================
+   5. FEATURE BAND (Marquee)
+============================================= */
+.feature-band {
+  padding: 20px 0;
+  background: var(--dark);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.band-track {
+  display: inline-flex;
+  gap: 60px;
+  animation: marquee 22s linear infinite;
+  font-family: var(--font-en);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+}
+
+.band-track span {
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.band-track span:hover { color: white; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* =============================================
+   6. APP SCENE SECTIONS
+============================================= */
+.app-scene {
+  min-height: 100vh;
+  padding: 120px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-scene-alt {
+  background: #f8fafc;
+}
+
+/* Section decorative blob */
+.section-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.sb-purple { width: 500px; height: 500px; background: rgba(139, 92, 246, 0.1); top: -150px; right: -150px; }
+.sb-blue   { width: 500px; height: 500px; background: rgba(59, 130, 246, 0.1);  bottom: -100px; left: -100px; }
+.sb-green  { width: 400px; height: 400px; background: rgba(16, 185, 129, 0.07); top: -100px; left: 50%; }
+
+.scene-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 48px;
+  z-index: 2;
+}
+
+.scene-layout-left  { flex-direction: row; }
+.scene-layout-right { flex-direction: row-reverse; }
+
+.scene-text { flex: 1; max-width: 480px; }
+
+.section-tag {
+  font-family: var(--font-en);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-blue);
+  margin-bottom: 20px;
+}
+
+.scene-text h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+.scene-text p {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+  line-height: 1.9;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--dark-2);
+}
+
+.fi-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; height: 24px;
+  background: var(--grad-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   7. PHONE DEVICE MOCKUP
+============================================= */
+.phone-device {
+  position: relative;
+  border-radius: var(--radius-phone);
+  background: #111;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.1),
+    0 40px 80px -20px rgba(0, 0, 0, 0.3),
+    0 10px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px; height: 24px;
+  background: #111;
+  border-radius: 99px;
+  z-index: 10;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+}
+
+.phone-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hero Phone */
+.hero-phone {
+  width: 300px;
+  height: 610px;
+}
+
+/* =============================================
+   8. CURATION PHONES LAYOUT
+============================================= */
+.phones-spread {
+  position: relative;
+  width: 440px;
+  height: 600px;
+  flex-shrink: 0;
+}
+
+.phone-front {
+  width: 260px;
+  height: 530px;
+  position: absolute;
+  left: 0; top: 40px;
+  z-index: 3;
+  transform: rotate(-6deg);
+}
+
+.phone-back {
+  width: 260px;
+  height: 530px;
+  position: absolute;
+  right: 0; top: 0;
+  z-index: 2;
+  transform: rotate(6deg);
+}
+
+/* Floating interest tags */
+.float-tag {
+  position: absolute;
+  padding: 10px 20px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ft-purple { background: #ede9fe; color: #7c3aed; top: -20px; left: -30px; }
+.ft-blue   { background: #dbeafe; color: #2563eb; top: 50%; right: -40px; }
+.ft-pink   { background: #fce7f3; color: #db2777; bottom: 10px; left: -10px; }
+
+/* =============================================
+   9. COMMUNITY PHONES LAYOUT
+============================================= */
+.phones-triple {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.phone-side-left  { width: 220px; height: 450px; transform: rotate(-5deg) translateY(20px); opacity: 0.85; }
+.phone-center     { width: 260px; height: 530px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.35); }
+.phone-side-right { width: 220px; height: 450px; transform: rotate(5deg) translateY(20px); opacity: 0.85; }
+
+/* =============================================
+   10. STORAGE PHONES LAYOUT
+============================================= */
+.phones-storage {
+  position: relative;
+  flex-shrink: 0;
+  width: 480px;
+  height: 600px;
+}
+
+.ps-detail  { width: 220px; height: 450px; position: absolute; left: 0; top: 60px; z-index: 2; transform: rotate(-5deg); }
+.ps-storage { width: 230px; height: 470px; position: absolute; left: 50%; top: 0; transform: translateX(-50%); z-index: 3; }
+.ps-mypage  { width: 220px; height: 450px; position: absolute; right: 0; top: 80px; z-index: 2; transform: rotate(5deg); }
+
+.bookmark-pop {
+  position: absolute;
+  top: -10px; right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: white;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--dark);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* =============================================
+   11. REVEAL ANIMATIONS (initial states)
+============================================= */
+.reveal-left,
+.reveal-right {
+  opacity: 0;
+}
+
+/* =============================================
+   12. FOOTER
+============================================= */
+.footer {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--dark);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 140px 24px 80px;
+  /* Branded pattern overlay */
+  background-image: url('pattern.png'), linear-gradient(135deg, #0F172A, #1a0a3d);
+  background-size: 400px, cover;
+  background-blend-mode: soft-light;
+}
+
+.footer-glow-1 {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%);
+  top: -180px; left: -180px;
+  pointer-events: none;
+}
+
+.footer-glow-2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  bottom: -150px; right: -150px;
+  pointer-events: none;
+}
+
+.footer-store-float {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fsf-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fsf-ring-1 {
+  width: 700px; height: 700px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ringPulse 6s ease-in-out infinite;
+}
+
+.fsf-ring-2 {
+  width: 900px; height: 900px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ringPulse 6s ease-in-out 2s infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50%  { opacity: 0.1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.footer-inner { position: relative; z-index: 2; }
+
+.footer-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 99px;
+  margin-bottom: 24px;
+  letter-spacing: 0.06em;
+}
+
+.footer-inner h2 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.footer-sub {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 60px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.store-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 36px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 220px;
+}
+
+.store-btn:hover {
+  background: white;
+  color: var(--dark);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.store-label {
+  font-size: 0.72rem;
+  font-family: var(--font-en);
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+}
+
+.store-name {
+  font-size: 1.15rem;
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.footer-nav a {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s;
+}
+
+.footer-nav a:hover { color: rgba(255, 255, 255, 0.8); }
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* =============================================
+   13. RESPONSIVE
+============================================= */
+@media (max-width: 1024px) {
+  .scene-layout {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 60px;
+  }
+
+  .scene-text { max-width: 600px; }
+
+  .feature-list { align-items: center; }
+
+  .phones-triple {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+
+  .phones-spread {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+
+  .phones-storage {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 24px 60px;
+    gap: 40px;
+  }
+
+  .hero-buttons { justify-content: center; }
+
+  .hero-stats { justify-content: center; }
+
+  .nav-links { display: none; }
+
+  .nav-hamburger { display: flex; }
+
+  #gnb { padding: 0 24px; }
+
+  .hero-phone { width: 240px; height: 490px; }
+
+  .deco-tag-1, .deco-tag-3 { display: none; }
+
+  .phones-triple { transform: scale(0.7); transform-origin: center; }
+
+  .phones-spread { transform: scale(0.75); height: 500px; }
+
+  .phones-storage { transform: scale(0.7); height: 500px; }
+
+  .scene-layout { padding: 0 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 2.4rem; }
+
+  .phones-triple { transform: scale(0.58); }
+
+  .phones-spread { transform: scale(0.65); height: 420px; }
+
+  .phones-storage { transform: scale(0.6); height: 420px; }
+
+  .btn-group { flex-direction: column; align-items: center; }
+
+  .store-btn { min-width: 0; width: 100%; max-width: 280px; }
+}
